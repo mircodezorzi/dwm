@@ -10,16 +10,18 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Source Code Pro:style=Thin:pixelsize=14" };
-static const char dmenufont[]       = "Source Code Pro:style=Thin:size=10";
+static const char *fonts[]          = { "IBM Plex Mono:style=Regular:pixelsize=14" };
+static const char dmenufont[]       = "IBM Plex Mono:style=Regular:size=10";
 static const char col_darkgray[]    = "#282828";
 static const char col_lightgray[]   = "#d8d8d8";
 static const char col_background[]  = "#181818";
 static const char col_foreground[]  = "#585858";
+static const char col_highlight[]   = "#ab4642";
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_lightgray, col_background, col_background },
-	[SchemeSel]  = { col_lightgray, col_darkgray,   col_foreground },
+	/*                    fg             bg              border   */
+	[SchemeNorm]      = { col_lightgray, col_background, col_background },
+	[SchemeSel]       = { col_lightgray, col_darkgray,   col_foreground },
+  [SchemeHighlight] = { col_highlight, col_background, 0              },
 };
 
 /* tagging */
