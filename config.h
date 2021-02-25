@@ -1,5 +1,6 @@
 /* See LICENSE file for copyright and license details. */
 #include <X11/XF86keysym.h>
+#include "gaplessgrid.c"
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -21,7 +22,7 @@ static const char *colors[][3]      = {
 	/*                    fg             bg              border   */
 	[SchemeNorm]      = { col_lightgray, col_background, col_background },
 	[SchemeSel]       = { col_lightgray, col_darkgray,   col_foreground },
-  [SchemeHighlight] = { col_highlight, col_background, 0              },
+  [SchemeHighlight] = { col_highlight, col_darkgray,   0              },
 };
 
 /* tagging */
@@ -47,8 +48,9 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "tile",      tile },  /* first entry is default */
-	{ "float",      NULL }, /* no layout function means floating behavior */
-	{ "monocle",      monocle },
+	{ "grid",      gaplessgrid },
+	{ "monocle",   monocle },
+	{ "float",     NULL }, /* no layout function means floating behavior */
 };
 
 /* key definitions */
@@ -61,13 +63,14 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]  = { "dmenu_run",  "-m", dmenumon, "-fn", dmenufont, "-nb", col_background, "-nf", col_foreground, "-sb", col_lightgray, "-sf", col_background, NULL };
-static const char *clipmenu[]  = { "clipmenu",  "-m", dmenumon, "-fn", dmenufont, "-nb", col_background, "-nf", col_foreground, "-sb", col_lightgray, "-sf", col_background, NULL };
+static const char *dmenucmd[]  = { "dmenu_run",  "-m", dmenumon, "-fn", dmenufont, "-nb", col_background, "-nf", col_foreground, "-sb", col_highlight, "-sf", col_background, "-shb", col_highlight, NULL };
+static const char *clipmenu[]  = { "clipmenu",  "-m", dmenumon, "-fn", dmenufont, "-nb", col_background, "-nf", col_foreground, "-sb", col_highlight, "-sf", col_background, "-shb", col_highlight, NULL };
 
 static const char *browser[]  = { "chromium",  NULL };
 static const char *editor[]   = { "emacsclient", "-c", NULL };
 static const char *terminal[] = { "kitty", NULL };
 static const char *music[]    = { "spotify-tray", NULL };
+static const char *ida[]      = { "/home/mirco/bin/ida", NULL };
 
 static const char *screenshot[]     = { "/home/mirco/bin/screenshot", NULL };
 static const char *fullscreenshot[] = { "/home/mirco/bin/screenshot", "fullscreen", NULL };
@@ -90,6 +93,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_a,      spawn,          { .v = browser } },
 	{ MODKEY,                       XK_e,      spawn,          { .v = editor } },
 	{ MODKEY,                       XK_s,      spawn,          { .v = music } },
+	{ MODKEY,                       XK_i,      spawn,          { .v = ida } },
 
 	{ MODKEY,                       XK_b,      togglebar,      { 0 } },
 	{ MODKEY,                       XK_h,      focusstack,     { .i = +1 } },
@@ -123,7 +127,6 @@ static Key keys[] = {
 	TAGKEYS(XK_8, 7)
 	TAGKEYS(XK_9, 8)
 #endif
-
 
 	{ 0,         XF86XK_AudioRaiseVolume,  spawn,          {.v = volup } },
 	{ 0,         XF86XK_AudioLowerVolume,  spawn,          {.v = voldown } },
